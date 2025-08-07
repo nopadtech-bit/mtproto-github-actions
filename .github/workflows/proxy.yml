@@ -1,1 +1,24 @@
+name: Start MTProto Proxy
 
+on:
+  workflow_dispatch:
+
+jobs:
+  run-proxy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y python3-pip git
+        pip3 install -r requirements.txt
+
+    - name: Download MTProtoProxy
+      run: |
+        git clone https://github.com/alexbers/mtprotoproxy.git
+        cp config.py mtprotoproxy/
+        cp requirements.txt mtprotoproxy/
+        cd mtprotoproxy && python3 mtprotoproxy.py
