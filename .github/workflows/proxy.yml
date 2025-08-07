@@ -10,23 +10,13 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v2
 
-    - name: Clone mtprotoproxy repo
+    - name: Clone, install dependencies and run proxy
       run: |
         git clone https://github.com/alexbers/mtprotoproxy.git
-
-    - name: Install dependencies
-      run: |
+        cp config.py mtprotoproxy/
+        cp requirements.txt mtprotoproxy/
+        cd mtprotoproxy
         sudo apt update
         sudo apt install -y python3-pip git
-        cd mtprotoproxy
         pip3 install -r requirements.txt
-
-    - name: Copy config and requirements
-      run: |
-        cp ../config.py mtprotoproxy/
-        cp ../requirements.txt mtprotoproxy/
-
-    - name: Run MTProto Proxy
-      run: |
-        cd mtprotoproxy
         python3 mtprotoproxy.py
