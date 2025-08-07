@@ -14,11 +14,15 @@ jobs:
       run: |
         sudo apt update
         sudo apt install -y python3-pip git
+        cd mtprotoproxy
         pip3 install -r requirements.txt
 
-    - name: Download MTProtoProxy
+    - name: Copy config and requirements
       run: |
-        git clone https://github.com/alexbers/mtprotoproxy.git
-        cp config.py mtprotoproxy/
-        cp requirements.txt mtprotoproxy/
-        cd mtprotoproxy && python3 mtprotoproxy.py
+        cp ../config.py mtprotoproxy/
+        cp ../requirements.txt mtprotoproxy/
+
+    - name: Run MTProto Proxy
+      run: |
+        cd mtprotoproxy
+        python3 mtprotoproxy.py
